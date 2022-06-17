@@ -4,12 +4,12 @@
       <Title>スキル見える化</Title>
     </Section>
     <Section align="end" toolbar>
-			{#if !isLoggedIn}
+			{#if !$authStore.isLoggedIn}
       <IconButton on:click={loginWithGoogle} class="material-icons" aria-label="Login"
         >login</IconButton
       >
 			{/if}
-			{#if isLoggedIn}
+			{#if $authStore.isLoggedIn}
       <IconButton on:click={logout} class="material-icons" aria-label="Logout"
         >logout</IconButton
       >
@@ -27,16 +27,29 @@
   } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
 
-	let isLoggedIn = false
+	import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
+	import authStore from '../../stores/authStore';
 
   async function loginWithGoogle() {
-    isLoggedIn = true
-		console.log('login')
+		const auth = getAuth();
+		const provider = new GoogleAuthProvider();
+		signInWithPopup(auth, provider)
+		  .then((result) => {
+		    const user = result.user;
+
+				authState.set({
+					isLoggedIn: user !== null,
+					user,
+					firebaseControlled: true,
+				});
+		  }).catch((error) => {
+		    console.log(error);
+		  });
   }
 
 	async function logout() {
-		isLoggedIn = false
-		console.log('logout')
+		const auth = getAuth();
+		await signOut(auth);
 	}
 </script>
 
