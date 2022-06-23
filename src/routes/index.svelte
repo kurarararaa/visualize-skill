@@ -7,8 +7,9 @@
 
 	import { onMount } from 'svelte';
 	import { onAuthStateChanged } from "firebase/auth";
-	import { auth } from "$lib/firebase";
+	import { auth, db } from "$lib/firebase";
 	import authStore from '../stores/authStore';
+	import { collection, getDocs } from "firebase/firestore";
 
 	onMount(() => {
 		onAuthStateChanged(auth, (user) => {
@@ -25,7 +26,14 @@
 		  }
 		});
 	});
+
+	const fetchSkills = async function() {
+		const snapshot = await getDocs(collection(db, 'skills'))
+		snapshot.docs.map((doc) => console.log(doc.data()))
+	}
 </script>
+
+{#await fetchSkills()}{/await}
 
 <svelte:head>
 	<title>Home</title>
