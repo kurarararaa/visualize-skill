@@ -27,12 +27,11 @@
   } from '@smui/top-app-bar';
   import IconButton from '@smui/icon-button';
 
-	import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from 'firebase/auth';
-	import authStore from '../../stores/authStore';
+	import { signInWithPopup, signOut } from 'firebase/auth';
+  import { auth, provider } from "../firebase";
+  import authStore from '../../stores/authStore';
 
   async function loginWithGoogle() {
-		const auth = getAuth();
-		const provider = new GoogleAuthProvider();
 		signInWithPopup(auth, provider)
 		  .then((result) => {
 		    const user = result.user;
@@ -48,7 +47,6 @@
   }
 
 	async function logout() {
-		const auth = getAuth();
 		await signOut(auth);
 	}
 </script>

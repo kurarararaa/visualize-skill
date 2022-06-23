@@ -4,6 +4,27 @@
 
 <script lang="ts">
 	import Counter from '$lib/Counter.svelte';
+
+	import { onMount } from 'svelte';
+	import { onAuthStateChanged } from "firebase/auth";
+	import { auth } from "$lib/firebase";
+	import authStore from '../stores/authStore';
+
+	onMount(() => {
+		onAuthStateChanged(auth, (user) => {
+		  if (user) {
+		    authStore.set({
+					isLoggedIn: true,
+					user,
+				});
+		  } else {
+		    authStore.set({
+					isLoggedIn: false,
+					user: undefined,
+				});
+		  }
+		});
+	});
 </script>
 
 <svelte:head>
