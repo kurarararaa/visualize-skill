@@ -9,8 +9,6 @@
       <HelperText slot="helper">Helper Text</HelperText>
     </Textfield>
 
-    <pre class="status">Value: {valueA}</pre>
-
     <div class="flex">
       <Proficiency></Proficiency>
     </div>
