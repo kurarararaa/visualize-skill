@@ -1,5 +1,5 @@
 <div class="skill-card-row">
-  <LayoutGrid>
+  <LayoutGrid style="overflow: hidden;">
       <Cell span={2}>
         <div class="skill-card-cell skill-card-text">{name}</div>
       </Cell>
@@ -37,6 +37,8 @@
   }
 .skill-card-row {
   border: solid;
+  border-radius: 10px;
+  background-color: rgba(187, 191, 208,0.3);
 }
 .skill-card-text {
   font-size: x-large;
