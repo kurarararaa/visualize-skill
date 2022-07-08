@@ -29,7 +29,7 @@
 
 	const fetchSkills = async function() {
 		const snapshot = await getDocs(collection(db, 'skills'))
-		snapshot.docs.map((doc) => console.log(doc.data()))
+		// snapshot.docs.map((doc) => console.log(doc.data()))
 	}
 </script>
 

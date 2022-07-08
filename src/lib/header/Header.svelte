@@ -10,8 +10,8 @@
       >
 			{/if}
 			{#if $authStore.isLoggedIn}
-      <IconButton on:click={logout} class="material-icons" aria-label="Logout"
-        >logout</IconButton
+      <IconButton on:click={logout} aria-label="Logout"
+        ><img class="image-icons" src="{user.photoURL}" /></IconButton
       >
 			{/if}
     </Section>
@@ -31,12 +31,18 @@
   import { auth, provider } from "../firebase";
   import authStore from '../../stores/authStore';
 
+  let user;
+	authStore.subscribe(value => {
+		user = value.user;
+	});
+	console.log(user)
+
   async function loginWithGoogle() {
 		signInWithPopup(auth, provider)
 		  .then((result) => {
 		    const user = result.user;
 
-				authState.set({
+				authStore.set({
 					isLoggedIn: user !== null,
 					user,
 					firebaseControlled: true,
@@ -60,5 +66,11 @@
     height: auto !important;
     width: auto !important;
     position: static !important;
+  }
+
+  .image-icons {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
   }
 </style>
