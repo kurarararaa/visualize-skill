@@ -31,9 +31,14 @@
 		const snapshot = await getDocs(collection(db, 'skills'))
 		// snapshot.docs.map((doc) => console.log(doc.data()))
 	}
+	const fetchUsers = async function() {
+		const snapshot = await getDocs(collection(db, 'users'))
+		snapshot.docs.map((doc) => console.log(doc.data()))
+	}
 </script>
 
 {#await fetchSkills()}{/await}
+{#await fetchUsers()}{/await}
 
 <svelte:head>
 	<title>Home</title>
