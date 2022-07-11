@@ -1,35 +1,35 @@
 <div>
   <div class="card-display"> 
     <div class="card-container">
-      <Card style="margin-bottom: 25px;">
-        <Content style="width=95%; border-bottom: 1px dashed grey; margin: 0px 3% 25px 3%;"> 
+      <Card style="margin: 25px 0px;">
+        <Content style="width=95%; border-bottom: 1px dashed grey; margin: 0px 3%"> 
           <LayoutGrid>
-            <Cell span={4}>
-              <img class="image-icon" src="{user.photoURL}" />
+            <Cell span={3} align="middle">
+              <img class="image-icon" alt="" src="{userIcon}" />
             </Cell>
-            <Cell span={4}>
+            <Cell span={3} align="middle">
               <div>
-                やまだはなこ
+                {userNameRuby}
               </div>
               <div class="name-text">
-                山田花子
+                {userName}
               </div>
-              <div>
-                No.000317
+              <div style="font-size: large;">
+                No.{userNo}
               </div>
             </Cell>
-            <Cell span={4}>
+            <Cell span={6} align="bottom" style="text-align: right; font-size: large;">
               <div>
-                30歳
+                {age} 歳
               </div>
               <div>
-                1990.7.7生
+                {birthDate} 生
               </div>
             </Cell>
           </LayoutGrid>
         </Content>
 
-        <div> 
+        <div class="card-list"> 
           <!-- カードリスト -->
           {#each skills as skill}
             <div  class="cardlist-row">
@@ -38,7 +38,7 @@
           {/each}
         </div> 
       </Card>
-      
+    
     </div>
   </div>
 </div>
@@ -46,47 +46,44 @@
 <script lang="ts">
    import Card, {
     Content,
-    Actions,
-    ActionIcons,
   } from '@smui/card';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import SkillCard from '$lib/SkillCard.svelte';
-  import ImageList, {
-    Item,
-    ImageAspectContainer,
-    Image,
-    Supporting,
-    Label,
-  } from '@smui/image-list';
-  import authStore from '../stores/authStore';
 
+  export let userIcon:string;
+  export let userInfo:any;
+
+  let userName:String;
+  let userNameRuby:String;
+  let userNo:String; 
+  let birthDate:String;
+  let age:String;
+
+  // TODO スキルを整形する
   let skills = [
-    { name: 'Java', level: '★★☆', msg:'ある程度できる'},
-    { name: 'Vue', level: '★★★', msg:'人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる' },
-    { name: 'Typescript', level: '★☆☆', msg:'初心者です' },
-    { name: 'Java', level: '★★☆', msg:'ある程度できる'},
-    { name: 'Vue', level: '★★★', msg:'人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる' },
-    { name: 'Typescript', level: '★☆☆', msg:'初心者です' },
     { name: 'Java', level: '★★☆', msg:'ある程度できる'},
     { name: 'Vue', level: '★★★', msg:'人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる' },
     { name: 'Typescript', level: '★☆☆', msg:'初心者です' }
   ];  
-
-let user;
-authStore.subscribe(value => {
-  user = value.user;
-});
 </script>
 
 <style>
  .cardlist-row {
-  margin: 0px 5% 25px 5%;
+  margin: 25px 5% 0px 5%;
  }
  .name-text {
   font-size: xx-large;
+  padding-bottom: 5px;
 }
 .image-icon {
+  height: 130px;
+  width: 130px;
   border-radius: 50%;
-  border: 1px solid gray;
+  border: 2px solid gray;
+}
+.card-list {
+  margin-bottom: 25px;
+  overflow-y: scroll;
+  height: 600px;
 }
  </style>
