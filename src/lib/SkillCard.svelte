@@ -1,12 +1,12 @@
 <div class="skill-card-row">
   <LayoutGrid style="overflow: hidden;">
-      <Cell span={2}>
+      <Cell span={3}>
         <div class="skill-card-cell skill-card-text">{name}</div>
       </Cell>
       <Cell span={2}>
         <div class="skill-card-cell skill-card-text">{level}</div>
       </Cell>
-      <Cell span={8}>
+      <Cell span={7}>
         <div class="paper-container">
           <Paper style="background: rgba(103,103,120,0)" elevation={0}>
             <Content>
@@ -20,7 +20,7 @@
 
 <script lang="ts">
   import LayoutGrid, { Cell } from '@smui/layout-grid';
-  import Paper, { Title, Content } from '@smui/paper';
+  import Paper, { Content } from '@smui/paper';
 
   export let name:String
   export let level:String
@@ -28,19 +28,19 @@
 </script>
 
 <style>
- .skill-card-cell {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--mdc-theme-on-secondary, black);
-  }
+.skill-card-cell {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--mdc-theme-on-secondary, black);
+}
 .skill-card-row {
   border: solid;
   border-radius: 10px;
   background-color: rgba(187, 191, 208,0.3);
 }
 .skill-card-text {
-  font-size: x-large;
+  font-size: xx-large;
 }
 </style>
