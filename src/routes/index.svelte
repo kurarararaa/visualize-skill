@@ -9,6 +9,8 @@
 	import { onAuthStateChanged } from "firebase/auth";
 	import { auth, db } from "$lib/firebase";
 	import authStore from '../stores/authStore';
+	import skills from '../stores/skillsStore';
+	import users from '../stores/usersStore';
 	import { collection, getDocs } from "firebase/firestore";
 
 	onMount(() => {
@@ -29,11 +31,11 @@
 
 	const fetchSkills = async function() {
 		const snapshot = await getDocs(collection(db, 'skills'))
-		// snapshot.docs.map((doc) => console.log(doc.data()))
+		snapshot.docs.map((doc) => $skills = [...$skills, doc.data()])
 	}
 	const fetchUsers = async function() {
 		const snapshot = await getDocs(collection(db, 'users'))
-		snapshot.docs.map((doc) => console.log(doc.data()))
+		snapshot.docs.map((doc) => $users = [...$users, doc.data()])
 	}
 </script>
 
