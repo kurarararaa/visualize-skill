@@ -51,13 +51,11 @@
   import SkillCard from '$lib/SkillCard.svelte';
 
   export let userIcon:string;
-  export let userInfo:any;
-
-  let userName:String;
-  let userNameRuby:String;
-  let userNo:String; 
-  let birthDate:String;
-  let age:String;
+  export let age:number;
+  export let birthDate:String;
+  export let userName:String;
+  export let userNameRuby:String;
+  export let userNo:String;
 
   // TODO スキルを整形する
   let skills = [

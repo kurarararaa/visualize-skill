@@ -1,31 +1,41 @@
 <script context="module" lang="ts">
 	import SkillCardList from '$lib/SkillCardList.svelte';
-	import { db } from "$lib/firebase";
-	import { collection, getDocs } from "firebase/firestore";
-	import authStore from '../stores/authStore';
+
 	export const prerender = true;
+	export let user:any;
 
-	let userInfo;
-	const fetchUsers = async function() {
-		// TODO 実際はここで人単位で検索予定
-		const snapshot = await getDocs(collection(db, 'users'))
-		snapshot.docs.map((doc) => userInfo.push(doc.data()))
-	}
-
-	let user: any;
-  authStore.subscribe(value => {
-    user = value.user;
-  });
 	// TODO 仮設定、後から消す
-	let photoURL= "favicon.png";
+	let photoURL= "default.png";
 
-	const prop = {
-		// 画面遷移するとログイン情報が消えるため一旦コメントアウト
-		// userIcon: user.photoURL,
-		userIcon: photoURL,
-		userInfo: userInfo
+	// 年齢の計算する
+	const birthdate = "1996/06/05"; 
+	const ageCalculation = ( birthDate:Date , nowDate:Date ) => {
+		const birthNumber = birthDate.getFullYear() * 10000 
+													+ (birthDate.getMonth() + 1 ) * 100 
+													+ birthDate.getDate();
+		const nowNumber = nowDate.getFullYear() * 10000 
+													+ (nowDate.getMonth() + 1 ) * 100 
+													+ nowDate.getDate();
+
+		return Math.floor( (nowNumber - birthNumber) / 10000 );
 	}
+
+	const age = ageCalculation( new Date(birthdate) , new Date() );
+	const userName = "平野加奈子";
+	const userNameRuby = "ひらのかなこ";
+	const userNo = "000317";
+
+	const userInfo = {
+		// 画面遷移するとログイン情報が消えるため一旦コメントアウト
+		userIcon: photoURL,
+		age: age,
+		birthDate:birthdate,
+		userName: userName,
+		userNameRuby: userNameRuby,
+		userNo: userNo
+
+	}
+
 </script>
 
-{#await fetchUsers()}{/await}
-<SkillCardList {...prop}></SkillCardList>
+<SkillCardList {...userInfo}></SkillCardList>
