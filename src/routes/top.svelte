@@ -3,7 +3,15 @@
 </script>
 
 <script lang="ts">
-	import Search from '$lib/header/Search.svelte';
+	import Search from '$lib/Search.svelte';
 </script>
 
-<Search></Search>
+<div class="center">
+	<Search></Search>
+</div>
+
+<style>
+	.center{
+		text-align: center;
+	}
+</style>

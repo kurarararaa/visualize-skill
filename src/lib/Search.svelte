@@ -1,15 +1,14 @@
 <div class="columns margins">
-  <div>
+  <div class="center">
     <Textfield
       class="shaped-outlined"
       variant="outlined"
       bind:value={valueA}
       label="#タグやキーワードで検索"
     >
-      <HelperText slot="helper">Helper Text</HelperText>
     </Textfield>
 
-    <div class="flex">
+    <div class="center">
       <Proficiency></Proficiency>
     </div>
   </div>
@@ -19,7 +18,7 @@
 <script lang="ts">
   import Textfield from '@smui/textfield';
   import HelperText from '@smui/textfield/helper-text';
-  import Proficiency from '$lib/header/Proficiency.svelte';
+  import Proficiency from '$lib/Proficiency.svelte';
 
 
   let valueA = '';
@@ -28,6 +27,9 @@
 </script>
 
 <style>
+  .center{
+    text-align: center;
+  }
   *
     :global(.shaped-outlined
       .mdc-notched-outline
