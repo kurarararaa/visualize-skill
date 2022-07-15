@@ -1,29 +1,31 @@
 <div>
   <div class="card-display"> 
     <div class="card-container">
+      {#await fetchUsers()}
+      {:then user}
       <Card style="margin: 25px 0px;">
         <Content style="width=95%; border-bottom: 1px dashed grey; margin: 0px 3%"> 
           <LayoutGrid>
             <Cell span={3} align="middle">
-              <img class="image-icon" alt="" src="{userIcon}" />
+              <img class="image-icon" alt="" src="{user.userIcon}" />
             </Cell>
             <Cell span={3} align="middle">
               <div>
-                {userNameRuby}
+                {user.userNameRuby}
               </div>
               <div class="name-text">
-                {userName}
+                {user.userName}
               </div>
               <div style="font-size: large;">
-                No.{userNo}
+                No.{user.userNo}
               </div>
             </Cell>
             <Cell span={6} align="bottom" style="text-align: right; font-size: large;">
               <div>
-                {age} 歳
+                {user.age} 歳
               </div>
               <div>
-                {birthDate} 生
+                {user.birthDate} 生
               </div>
             </Cell>
           </LayoutGrid>
@@ -31,14 +33,14 @@
 
         <div class="card-list"> 
           <!-- カードリスト -->
-          {#each skills as skill}
+          {#each user.skills as skill}
             <div  class="cardlist-row">
               <SkillCard {...skill}/>
             </div>
           {/each}
         </div> 
       </Card>
-    
+      {/await}
     </div>
   </div>
 </div>
@@ -49,20 +51,46 @@
   } from '@smui/card';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import SkillCard from '$lib/SkillCard.svelte';
+  import { db } from "$lib/firebase";
+  import { collection, getDocs } from "firebase/firestore";
 
-  export let userIcon:string;
-  export let age:number;
-  export let birthDate:String;
-  export let userName:String;
-  export let userNameRuby:String;
-  export let userNo:String;
+  let users:any = []; // 後から消す
+  let skills:any = [];
+  let user:any;
 
-  // TODO スキルを整形する
-  let skills = [
-    { name: 'Java', level: '★★☆', msg:'ある程度できる'},
-    { name: 'Vue', level: '★★★', msg:'人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる人に教えられる' },
-    { name: 'Typescript', level: '★☆☆', msg:'初心者です' }
-  ];  
+  // 年齢の計算する
+  const ageCalculation = (birthDate: Date, nowDate: Date) => {
+    const birthNumber =
+      birthDate.getFullYear() * 10000 + (birthDate.getMonth() + 1) * 100 + birthDate.getDate();
+    const nowNumber =
+      nowDate.getFullYear() * 10000 + (nowDate.getMonth() + 1) * 100 + nowDate.getDate();
+
+    return Math.floor((nowNumber - birthNumber) / 10000);
+  };
+
+	const fetchUsers = async function() {
+		const snapshot = await getDocs(collection(db, 'users'))
+		snapshot.docs.map((doc) => users.push(doc.data())) // 本当は繰り返さない
+    user = users[1]
+    
+    user.skills.forEach((val: any, index: any) => {
+      skills.push({
+        name: val,
+        level: user.ranks[index],
+        msg:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+      })
+    })
+
+    return await {
+      userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
+      age: ageCalculation(new Date('1996/06/05'), new Date()),
+      birthDate: '1996/06/05',
+      userName: user.name,
+      userNameRuby: 'xxxxxxx',
+      userNo: 'xxxxxx',
+      skills: skills
+    };
+	} 
 </script>
 
 <style>
