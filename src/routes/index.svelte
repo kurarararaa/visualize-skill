@@ -3,9 +3,9 @@
 </script>
 
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
-
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+
 	import { onAuthStateChanged } from "firebase/auth";
 	import { auth, db } from "$lib/firebase";
 	import authStore from '../stores/authStore';
@@ -29,6 +29,13 @@
 		});
 	});
 
+	const fetch = async function() {
+		await fetchSkills()
+		await fetchUsers()
+		console.log($skills)
+		goto("/top")
+	}
+
 	const fetchSkills = async function() {
 		const snapshot = await getDocs(collection(db, 'skills'))
 		snapshot.docs.map((doc) => $skills = [...$skills, doc.data()])
@@ -39,31 +46,16 @@
 	}
 </script>
 
-{#await fetchSkills()}{/await}
-{#await fetchUsers()}{/await}
+{#if $authStore.isLoggedIn}
+	{#await fetch()}{/await}
+{/if}
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+	<title>スキル見える化</title>
+	<meta name="description" content="要員のスキルを見える化するよ！" />
 </svelte:head>
 
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
-
-	<Counter />
 </section>
 
 <style>

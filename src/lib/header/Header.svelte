@@ -35,7 +35,6 @@
 	authStore.subscribe(value => {
 		user = value.user;
 	});
-	console.log(user)
 
   async function loginWithGoogle() {
 		signInWithPopup(auth, provider)
