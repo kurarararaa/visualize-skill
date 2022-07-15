@@ -7,7 +7,7 @@
         <div class="skill-card-cell skill-card-text">{level}</div>
       </Cell>
       <Cell span={7}>
-        <div class="paper-container">
+        <div class="paper-container" style="overflow-wrap: break-word;">
           <Paper style="background: rgba(103,103,120,0)" elevation={0}>
             <Content>
             {msg}
