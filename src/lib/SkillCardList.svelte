@@ -1,7 +1,7 @@
 <div>
   <div class="card-display"> 
     <div class="card-container">
-      {#await fetchUsers()}
+      {#await getUserInfo()}
       {:then user}
       <Card style="margin: 25px 0px;">
         <Content style="width=95%; border-bottom: 1px dashed grey; margin: 0px 3%"> 
@@ -51,10 +51,8 @@
   } from '@smui/card';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import SkillCard from '$lib/SkillCard.svelte';
-  import { db } from "$lib/firebase";
-  import { collection, getDocs } from "firebase/firestore";
+  import selectedUser from "../stores/selectedUser";
 
-  let users:any = []; // 後から消す
   let skills:any = [];
   let user:any;
 
@@ -68,29 +66,28 @@
     return Math.floor((nowNumber - birthNumber) / 10000);
   };
 
-	const fetchUsers = async function() {
-		const snapshot = await getDocs(collection(db, 'users'))
-		snapshot.docs.map((doc) => users.push(doc.data())) // 本当は繰り返さない
-    user = users[1]
-    
+  const getUserInfo = async function() {
+    await selectedUser.subscribe((value) => user = value)
     user.skills.forEach((val: any, index: any) => {
-      skills.push({
-        name: val,
-        level: user.ranks[index],
-        msg:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
-      })
+    skills.push({
+      name: val,
+      level: user.ranks[index],
+      msg:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
     })
+  })
 
-    return await {
-      userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
-      age: ageCalculation(new Date('1996/06/05'), new Date()),
-      birthDate: '1996/06/05',
-      userName: user.name,
-      userNameRuby: 'xxxxxxx',
-      userNo: 'xxxxxx',
-      skills: skills
-    };
-	} 
+  return {
+    userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
+    age: ageCalculation(new Date('1996/06/05'), new Date()),
+    birthDate: '1996/06/05',
+    userName: user.name,
+    userNameRuby: 'xxxxxxx',
+    userNo: 'xxxxxx',
+    skills: skills
+  };
+  }
+
+  
 </script>
 
 <style>
