@@ -1,0 +1,1 @@
+export const skills = ["Java","Spring","Seasar2","Python","Django","Flask","SQL","C言語","C#","VB.Net","Ruby","Ruby on Rails","Elixir","PHP","Laravel","CakePHP","JavaScript","Vue.js","React","Angular","JQuery","HTML","CSS","TypeScript","Swift","Objective-C","Android","Kotlin","Flutter","React Native","Ionic","Monaca","Firebase","AWS","Azure","GCP","BaaS@rakuza"];
