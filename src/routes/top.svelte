@@ -9,9 +9,12 @@
 	import skills from '../stores/skillsStore';
 	import users from '../stores/usersStore';
 	import Proficiency from '$lib/Proficiency.svelte';
+	import selectedUser from '../stores/selectedUserEmail';
+	import { goto } from '$app/navigation';
+	import User from './user.svelte';
 
 	let viewSkills;
-	let viewUsers;
+	let viewUsers:any = [];
 
 	skills.subscribe((value) => {
 		console.log(value);
@@ -51,19 +54,32 @@
 		resultList.push({
 			userIcon: 'default.png',
 			name: userInfo.name,
+			email: userInfo.email,
 			skill: userInfo.skills[index],
 			level: userInfo.ranks[index]
 		});
 	});
 
 	console.log(resultList);
+
+
+
+	const setUser = (user: any) => {
+		$selectedUser = user;
+		goto('./user');
+	}
+	
+
+
 </script>
 
 <div class="center">
 	<Search />
 	<Proficiency />
 	{#each resultList as result}
-		<Results {...result} />
+	<div on:click={() => setUser(result.email)}>
+		<Results {...result}></Results>
+	</div>
 	{/each}
 </div>
 

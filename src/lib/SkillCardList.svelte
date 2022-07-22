@@ -40,6 +40,11 @@
           {/each}
         </div> 
       </Card>
+
+      <!-- <div class="card-container">
+        表示できません。
+      </div> -->
+
       {/await}
     </div>
   </div>
@@ -51,10 +56,10 @@
   } from '@smui/card';
   import LayoutGrid, { Cell } from '@smui/layout-grid';
   import SkillCard from '$lib/SkillCard.svelte';
-  import selectedUser from "../stores/selectedUser";
-
-  let skills:any = [];
-  let user:any;
+  import selectedUser from "../stores/selectedUserEmail";
+  import usersStore from "../stores/usersStore";
+ 
+  let userAll:any = [];
 
   // 年齢の計算する
   const ageCalculation = (birthDate: Date, nowDate: Date) => {
@@ -66,25 +71,42 @@
     return Math.floor((nowNumber - birthNumber) / 10000);
   };
 
-  const getUserInfo = async function() {
-    await selectedUser.subscribe((value) => user = value)
-    user.skills.forEach((val: any, index: any) => {
-    skills.push({
-      name: val,
-      level: user.ranks[index],
-      msg:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+  usersStore.subscribe(users => {
+    users.map((value) =>{
+      userAll.push(value);
     })
-  })
+	});
 
-  return {
-    userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
-    age: ageCalculation(new Date('1996/06/05'), new Date()),
-    birthDate: '1996/06/05',
-    userName: user.name,
-    userNameRuby: 'xxxxxxx',
-    userNo: 'xxxxxx',
-    skills: skills
-  };
+  const getUserInfo = async function() {
+    let selectedUserEmail:string;
+    let skills:any[] = [];
+    let user:any;
+    
+    await selectedUser.subscribe((value) => selectedUserEmail = value)
+    
+    user = userAll.filter((user:any) => {
+      if (user.email === selectedUserEmail) return true;
+    })
+
+    if(user.length == 1){
+      user[0].skills.forEach((val: string, index: any) => {
+        skills.push({
+          name: val,
+          level: user[0].ranks[index],
+          msg:'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+        })
+      })
+
+      return {
+        userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
+        age: ageCalculation(new Date('1996/06/05'), new Date()),
+        birthDate: '1996/06/05',
+        userName: user[0].name,
+        userNameRuby: 'xxxxxxx',
+        userNo: 'xxxxxx',
+        skills: skills
+      };
+    }
   }
 
   
