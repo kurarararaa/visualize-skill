@@ -1,6 +1,6 @@
 <script context="module" lang="ts">
 	export const prerender = true;
-	export let submitValue: String;
+	export let returnInputValue: String;
 </script>
 
 <script lang="ts">
@@ -14,7 +14,7 @@
 	import User from './user.svelte';
 
 	let viewSkills;
-	let viewUsers:any = [];
+	let viewUsers: any = [];
 
 	skills.subscribe((value) => {
 		console.log(value);
@@ -26,60 +26,48 @@
 		viewUsers = value;
 	});
 
-	// function search(){
-
-	// }
 	// 検索ワード
-	let searchSkill = 'Java'; // 後で置き換え
+	let searchSkill = '';
 	let searchLevel = '★'; // 後で置き換え
 	let resultList: any = [];
 
-	console.log(submitValue);
+	function parentMethod(event) {
+		resultList = [];
 
-	viewUsers.forEach((userInfo) => {
-		// console.log(userInfo);
-		let skills = userInfo.skills;
+		searchSkill = event.detail.value;
 
-		// スキルと
-		if (searchSkill === '') {
-		}
-		let index = skills.findIndex((elem) => elem === searchSkill);
+		viewUsers.forEach((userInfo) => {
+			let skills = userInfo.skills;
 
-		// if(index === '-1'){
-		// 	continue;
-		// }
+			let index = skills.findIndex((elem) => elem === searchSkill);
 
-		console.log(index);
-
-		resultList.push({
-			userIcon: 'default.png',
-			name: userInfo.name,
-			email: userInfo.email,
-			skill: userInfo.skills[index],
-			level: userInfo.ranks[index]
+			if (index >= 0) {
+				resultList.push({
+					userIcon: 'default.png',
+					name: userInfo.name,
+					email: userInfo.email,
+					skill: userInfo.skills[index],
+					level: userInfo.ranks[index]
+				});
+			}
 		});
-	});
 
-	console.log(resultList);
+		console.log(resultList);
 
-
-
-	const setUser = (user: any) => {
-		$selectedUser = user;
-		goto('./user');
+		const setUser = (user: any) => {
+			$selectedUser = user;
+			goto('./user');
+		};
 	}
-	
-
-
 </script>
 
 <div class="center">
-	<Search />
+	<Search on:parentMethod={parentMethod} />
 	<Proficiency />
 	{#each resultList as result}
-	<div on:click={() => setUser(result.email)}>
-		<Results {...result}></Results>
-	</div>
+		<div on:click={() => setUser(result.email)}>
+			<Results {...result} />
+		</div>
 	{/each}
 </div>
 

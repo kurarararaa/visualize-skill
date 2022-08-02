@@ -1,6 +1,10 @@
 <script>
 	import { skills } from '$lib/skillsData.js';
 	import Skill from '$lib/Skill.svelte';
+	import Button from '@smui/button';
+	import { createEventDispatcher } from 'svelte';
+
+	const dispatch = createEventDispatcher();
 
 	/* FILTERING skills DATA BASED ON INPUT */
 	let filteredSkills = [];
@@ -78,6 +82,10 @@
 			return;
 		}
 	};
+
+	const editProfile = () => {
+		dispatch('parentMethod', { value: inputValue });
+	};
 </script>
 
 <svelte:window on:keydown={navigateList} />
@@ -96,7 +104,7 @@
 		</div>
 
 		<div class="submit-button">
-			<input type="submit" />
+			<input type="submit" on:click={() => editProfile()} />
 		</div>
 	</div>
 
@@ -148,6 +156,7 @@
 		background-color: DodgerBlue;
 		color: #fff;
 		margin-left: 25px;
+		height: 40px;
 	}
 
 	#autocomplete-items-list {

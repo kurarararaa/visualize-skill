@@ -4,8 +4,8 @@
 	export let level: String;
 </script>
 
-<div class="card">
-	<div>
+<div class="container">
+	<div class="card">
 		<div class="flex">
 			<div>
 				<img class="image-icon" alt="" src={userIcon} />
@@ -23,9 +23,14 @@
 		</div>
 	</div>
 </div>
-<div class="a" />
+
+<br />
 
 <style>
+	.container {
+		display: flex;
+		justify-content: center;
+	}
 	.card {
 		background-color: white;
 		width: 400pt;
