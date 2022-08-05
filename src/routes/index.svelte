@@ -42,7 +42,11 @@
 	}
 	const fetchUsers = async function() {
 		const snapshot = await getDocs(collection(db, 'users'))
-		snapshot.docs.map((doc) => $users = [...$users, doc.data()])
+		snapshot.docs.map((doc) => {
+			let data = doc.data()
+			data.id = doc.id
+			$users = [...$users, data]
+		})
 	}
 </script>
 

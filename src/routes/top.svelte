@@ -54,11 +54,12 @@
 
 		console.log(resultList);
 
-		const setUser = (user: any) => {
+	}
+	
+	const setUser = (user: any) => {
 			$selectedUser = user;
 			goto('./user');
 		};
-	}
 </script>
 
 <div class="center">
