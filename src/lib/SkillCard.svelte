@@ -41,6 +41,6 @@
   background-color: rgba(187, 191, 208,0.3);
 }
 .skill-card-text {
-  font-size: xx-large;
+  font-size: x-large;
 }
 </style>
