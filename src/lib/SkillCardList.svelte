@@ -2,15 +2,15 @@
 	import Card, { Content } from '@smui/card';
 	import LayoutGrid, { Cell } from '@smui/layout-grid';
 	import SkillCard from '$lib/SkillCard.svelte';
-	import selectedUser from '../stores/selectedUserEmail';
+	import selectedUserEmail from '../stores/selectedUserEmail';
 	import usersStore from '../stores/usersStore';
-	import Dialog, { Header, Title, Content as DialogContent, Actions } from '@smui/dialog';
+	import Dialog, { Title, Actions } from '@smui/dialog';
 	import IconButton from '@smui/icon-button';
 	import Button, { Label } from '@smui/button';
 	import Fab, { Icon } from '@smui/fab';
 	import Textfield from '@smui/textfield';
 	import { db } from '$lib/firebase';
-	import { collection, updateDoc, doc } from 'firebase/firestore';
+	import { updateDoc, doc } from 'firebase/firestore';
 
 	let userAll: any = [];
 	let userInfo: any;
@@ -43,14 +43,11 @@
 	});
 
 	const getUserInfo = async function () {
-		let selectedUserEmail: string;
 		let skills: any[] = [];
 		let user: any;
 
-		await selectedUser.subscribe((value) => (selectedUserEmail = value));
-
 		user = userAll.filter((user: any) => {
-			if (user.email === selectedUserEmail) return true;
+			if (user.email === $selectedUserEmail) return true;
 		});
 
 		if (user.length == 1) {
@@ -188,8 +185,8 @@
 >
 	<Title id="simple-title">プロフィール編集</Title>
 	<!-- <IconButton action="close" class="material-icons">close</IconButton> -->
-	<Content id="simple-content" style="width: 200px; margin: 0px 15px;">
-		<div style="margin-top: 20px;">
+	<Content id="simple-content" style="width: 300px; margin: 0px 15px; text-align: center;">
+		<div style="margin-top: 30px;">
 			<Textfield
 				class="shaped-outlined"
 				variant="outlined"
@@ -197,7 +194,7 @@
 				label="名前"
 			/>
 		</div>
-		<div style="margin-top: 20px;">
+		<div style="margin-top: 30px;">
 			<Textfield
 				class="shaped-outlined"
 				variant="outlined"
@@ -205,7 +202,7 @@
 				label="ふりがな"
 			/>
 		</div>
-		<div style="margin-top: 20px;">
+		<div style="margin-top: 30px;">
 			<Textfield
 				class="shaped-outlined"
 				variant="outlined"
@@ -213,7 +210,7 @@
 				label="社員番号"
 			/>
 		</div>
-		<div style="margin-top: 20px;">
+		<div style="margin-top: 30px; margin-bottom: 20px;">
 			<Textfield
 				class="shaped-outlined"
 				variant="outlined"
