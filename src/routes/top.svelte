@@ -31,24 +31,43 @@
 	let searchLevel = '★'; // 後で置き換え
 	let resultList: any = [];
 
-	function parentMethod(event) {
+	function skillMethod(event) {
 		resultList = [];
+
+		let skills = [];
+		let ranks = [];
 
 		searchSkill = event.detail.value;
 
 		viewUsers.forEach((userInfo) => {
-			let skills = userInfo.skills;
+			skills = userInfo.skills;
+			ranks = userInfo.ranks;
 
-			let index = skills.findIndex((elem) => elem === searchSkill);
+			if(searchLevel == ''){
 
-			if (index >= 0) {
-				resultList.push({
-					userIcon: 'default.png',
-					name: userInfo.name,
-					email: userInfo.email,
-					skill: userInfo.skills[index],
-					level: userInfo.ranks[index]
-				});
+				let index = skills.findIndex((elem) => elem === searchSkill);
+
+				if (index >= 0) {
+					resultList.push({
+						userIcon: 'default.png',
+						name: userInfo.name,
+						email: userInfo.email,
+						skill: userInfo.skills[index],
+						level: userInfo.ranks[index]
+					});
+				}
+			} else {
+				let skillIndex = skills.findIndex((elem) => elem === searchSkill);
+
+				if (ranks[skillIndex] == searchLevel){
+					resultList.push({
+						userIcon: 'default.png',
+						name: userInfo.name,
+						email: userInfo.email,
+						skill: userInfo.skills[skillIndex],
+						level: userInfo.ranks[skillIndex]
+					});
+				}
 			}
 		});
 
@@ -63,7 +82,7 @@
 </script>
 
 <div class="center">
-	<Search on:parentMethod={parentMethod} />
+	<Search on:skillMethod={skillMethod} />
 	<Proficiency />
 	{#each resultList as result}
 		<div on:click={() => setUser(result.email)}>

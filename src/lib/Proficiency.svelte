@@ -2,7 +2,8 @@
 	import Chip, { Set, Text } from '@smui/chips';
 
 	let choices = ['★', '★★', '★★★'];
-	let selected = [];
+	let selected:any = ['★★'];
+	let inputValue:any = [];
 </script>
 
 <div class="center">

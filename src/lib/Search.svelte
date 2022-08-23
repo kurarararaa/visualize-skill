@@ -1,7 +1,6 @@
 <script>
 	import { skills } from '$lib/skillsData.js';
 	import Skill from '$lib/Skill.svelte';
-	import Button from '@smui/button';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();
@@ -84,7 +83,7 @@
 	};
 
 	const editProfile = () => {
-		dispatch('parentMethod', { value: inputValue });
+		dispatch('skillMethod', { value: inputValue });
 	};
 </script>
 
