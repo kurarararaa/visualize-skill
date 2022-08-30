@@ -99,6 +99,7 @@
 	}
 
 	async function updateProfile() {
+		// birthdayは空かどうかチェックを行って、age更新とDB更新する必要がある
 		const userRef = doc(db, 'users', userDocId);
 		updateDoc(userRef, { 
       name: editUserName, 
@@ -185,7 +186,7 @@
 >
 	<Title id="simple-title">プロフィール編集</Title>
 	<!-- <IconButton action="close" class="material-icons">close</IconButton> -->
-	<Content id="simple-content" style="width: 300px; margin: 0px 15px; text-align: center;">
+	<Content id="simple-content" style="width: 300px; margin: 0px 15px;">
 		<div style="margin-top: 30px;">
 			<Textfield
 				class="shaped-outlined"
@@ -216,7 +217,9 @@
 				variant="outlined"
 				bind:value={editBirthDate}
 				label="生年月日"
-			/>
+				type="date"
+			>
+			</Textfield>
 		</div>
 		<!-- <Button on:click={() => (isOpenEditSkill = true)}>
       <Label>Open Confirmation Dialog</Label>
