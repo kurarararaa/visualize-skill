@@ -26,6 +26,8 @@
 	let editUserNameRuby: string = '';
 	let editUserNo: string = '';
 
+	let  avatar:any, fileinput:any;
+
 	// 年齢の計算する
 	const ageCalculation = (birthDate: Date, nowDate: Date) => {
 		const birthNumber =
@@ -60,8 +62,9 @@
 			});
 
 			userDocId = user[0].id;
+			debugger
 			userInfo = {
-				userIcon: 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
+				userIcon: 'userIcon' in user[0] ? user[0].userIcon : 'default.png', // TODO 仮設定、後から画像アップロードできるようにしたい
 				age:
 					'birthDate' in user[0] ? ageCalculation(new Date(user[0].birthDate), new Date()) : '--',
 				birthDate: 'birthDate' in user[0] ? user[0].birthDate : '----/--/--',
@@ -100,13 +103,19 @@
 
 	async function updateProfile() {
 		// birthdayは空かどうかチェックを行って、age更新とDB更新する必要がある
-		const userRef = doc(db, 'users', userDocId);
-		updateDoc(userRef, { 
-      name: editUserName, 
+		let updateUserInfo:any = {
+			name: editUserName, 
       userNameRuby: editUserNameRuby,
       userNo: editUserNo,
       birthDate: editBirthDate
-     });
+		};
+
+		if(userInfo.userIcon != 'default.png'){
+			updateUserInfo.userIcon = userInfo.userIcon
+		}
+		
+		const userRef = doc(db, 'users', userDocId);
+		updateDoc(userRef, updateUserInfo);
 
 		userInfo.name = editUserName;
 		userInfo.userNameRuby = editUserNameRuby;
@@ -115,6 +124,15 @@
 
 		userInfo.age = ageCalculation(new Date(editBirthDate), new Date());
 		// ここで更新処理を行う 更新ができたらそこから値とればいいはず？ UserInfoいらない？
+	}
+
+	const onFileSelected =(e:any, userInfo:any)=>{
+  	let image = e.target.files[0];
+			let reader = new FileReader();
+			reader.readAsDataURL(image);
+			reader.onload = e => {
+				userInfo.userIcon = e.target.result
+		};
 	}
 </script>
 
@@ -221,6 +239,10 @@
 			>
 			</Textfield>
 		</div>
+		<div style="margin-top: 30px; margin-bottom: 20px;">
+			<img class="upload" src="https://static.thenounproject.com/png/625182-200.png" alt="" on:click={()=>{fileinput.click();}} />
+			<input style="display:none" type="file" accept=".jpg, .jpeg, .png" on:change={(e)=>onFileSelected(e, userInfo)} bind:this={fileinput} >
+		</div>
 		<!-- <Button on:click={() => (isOpenEditSkill = true)}>
       <Label>Open Confirmation Dialog</Label>
     </Button> -->
@@ -271,5 +293,11 @@
 		margin-bottom: 25px;
 		overflow-y: scroll;
 		height: 600px;
+	}
+	.upload{
+		display:flex;
+	height:50px;
+		width:50px;
+		cursor:pointer;
 	}
 </style>
