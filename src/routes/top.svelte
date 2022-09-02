@@ -8,7 +8,6 @@
 	import Results from '$lib/Results.svelte';
 	import skills from '../stores/skillsStore';
 	import users from '../stores/usersStore';
-	import Proficiency from '$lib/Proficiency.svelte';
 	import selectedUser from '../stores/selectedUserEmail';
 	import { goto } from '$app/navigation';
 	import User from './user.svelte';
@@ -28,7 +27,7 @@
 
 	// 検索ワード
 	let searchSkill = '';
-	let searchLevel = '★'; // 後で置き換え
+	let searchLevel: any = [];
 	let resultList: any = [];
 
 	function skillMethod(event) {
@@ -37,7 +36,8 @@
 		let skills = [];
 		let ranks = [];
 
-		searchSkill = event.detail.value;
+		searchSkill = event.detail.value.inputValue;
+		searchLevel = event.detail.value.selectedLevel;
 
 		viewUsers.forEach((userInfo) => {
 			skills = userInfo.skills;
@@ -83,7 +83,6 @@
 
 <div class="center">
 	<Search on:skillMethod={skillMethod} />
-	<Proficiency />
 	{#each resultList as result}
 		<div on:click={() => setUser(result.email)}>
 			<Results {...result} />

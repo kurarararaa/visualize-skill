@@ -1,16 +1,17 @@
-<script>
+<script lang="ts">
 	import { skills } from '$lib/skillsData.js';
 	import Skill from '$lib/Skill.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import Chip, { Set, Text } from '@smui/chips';
 
 	const dispatch = createEventDispatcher();
 
 	/* FILTERING skills DATA BASED ON INPUT */
-	let filteredSkills = [];
+	let filteredSkills:any = [];
 	// $: console.log(filteredSkills)
 
 	const filterSkills = () => {
-		let storageArr = [];
+		let storageArr:any = [];
 		if (inputValue) {
 			skills.forEach((skill) => {
 				if (skill.toLowerCase().startsWith(inputValue.toLowerCase())) {
@@ -22,7 +23,7 @@
 	};
 
 	/* HANDLING THE INPUT */
-	let searchInput; // use with bind:this to focus element
+	let searchInput = ''; // use with bind:this to focus element
 	let inputValue = '';
 
 	$: if (!inputValue) {
@@ -35,7 +36,7 @@
 		searchInput.focus();
 	};
 
-	const setInputVal = (skillName) => {
+	const setInputVal = (skillName:any) => {
 		inputValue = removeBold(skillName);
 		filteredSkills = [];
 		hiLiteIndex = null;
@@ -51,7 +52,7 @@
 		}
 	};
 
-	const makeMatchBold = (str) => {
+	const makeMatchBold = (str:any) => {
 		// replace part of (skill name === inputValue) with strong tags
 		let matched = str.substring(0, inputValue.length);
 		let makeBold = `<strong>${matched}</strong>`;
@@ -59,7 +60,7 @@
 		return boldedMatch;
 	};
 
-	const removeBold = (str) => {
+	const removeBold = (str:any) => {
 		//replace < and > all characters between
 		return str.replace(/<(.)*?>/g, '');
 		// return str.replace(/<(strong)>/g, "").replace(/<\/(strong)>/g, "");
@@ -82,8 +83,11 @@
 		}
 	};
 
+	let choices = ['★', '★★', '★★★'];
+	let selectedLevel:any = ['★★'];
+
 	const editProfile = () => {
-		dispatch('skillMethod', { value: inputValue });
+		dispatch('skillMethod', { value: { inputValue: inputValue, selectedLevel: selectedLevel } });
 	};
 </script>
 
@@ -121,6 +125,14 @@
 			</ul>
 		</div>
 	{/if}
+
+	<div class="center">
+		<Set chips={choices} let:chip filter bind:selected = {selectedLevel}>
+			<Chip {chip} touch>
+				<Text>{chip}</Text>
+			</Chip>
+		</Set>
+	</div>
 </form>
 
 <style>
