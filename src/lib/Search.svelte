@@ -31,11 +31,6 @@
 		hiLiteIndex = null;
 	}
 
-	const clearInput = () => {
-		inputValue = '';
-		searchInput.focus();
-	};
-
 	const setInputVal = (skillName:any) => {
 		inputValue = removeBold(skillName);
 		filteredSkills = [];
@@ -46,7 +41,6 @@
 	const submitValue = () => {
 		if (inputValue) {
 			console.log(`${inputValue} is submitted!`);
-			setTimeout(clearInput, 1000);
 		} else {
 			alert("You didn't type anything.");
 		}

@@ -59,7 +59,7 @@
 			} else {
 				let skillIndex = skills.findIndex((elem) => elem === searchSkill);
 
-				if (ranks[skillIndex] == searchLevel){
+				if (searchLevel.includes(ranks[skillIndex])){
 					resultList.push({
 						userIcon: 'default.png',
 						name: userInfo.name,
