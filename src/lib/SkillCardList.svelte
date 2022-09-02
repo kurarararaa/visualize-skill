@@ -294,6 +294,9 @@
 		overflow-y: scroll;
 		height: 600px;
 	}
+	.card-list::-webkit-scrollbar{
+  	display: none;
+	}
 	.upload{
 		display:flex;
 	height:50px;
