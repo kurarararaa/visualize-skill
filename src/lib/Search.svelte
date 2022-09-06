@@ -61,7 +61,7 @@
 	};
 
 	/* NAVIGATING OVER THE LIST OF SKILLS W HIGHLIGHTING */
-	let hiLiteIndex = null;
+	let hiLiteIndex:number = 0;
 	//$: console.log(hiLiteIndex);
 	$: hiLitedskill = filteredSkills[hiLiteIndex];
 

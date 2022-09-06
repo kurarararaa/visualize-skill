@@ -42,6 +42,11 @@
 		viewUsers.forEach((userInfo) => {
 			skills = userInfo.skills;
 			ranks = userInfo.ranks;
+			let userIcon = 'default.png';
+
+			if(userInfo.userIcon) {
+				userIcon = userInfo.userIcon;
+			}
 
 			if(searchLevel == ''){
 
@@ -49,7 +54,7 @@
 
 				if (index >= 0) {
 					resultList.push({
-						userIcon: 'default.png',
+						userIcon: userIcon,
 						name: userInfo.name,
 						email: userInfo.email,
 						skill: userInfo.skills[index],
@@ -61,7 +66,7 @@
 
 				if (searchLevel.includes(ranks[skillIndex])){
 					resultList.push({
-						userIcon: 'default.png',
+						userIcon: userIcon,
 						name: userInfo.name,
 						email: userInfo.email,
 						skill: userInfo.skills[skillIndex],
