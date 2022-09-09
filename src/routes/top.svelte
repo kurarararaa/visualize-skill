@@ -8,9 +8,6 @@
 	import Results from '$lib/Results.svelte';
 	import skills from '../stores/skillsStore';
 	import users from '../stores/usersStore';
-	import selectedUser from '../stores/selectedUserEmail';
-	import { goto } from '$app/navigation';
-	import User from './user.svelte';
 
 	let viewSkills;
 	let viewUsers: any = [];
@@ -30,7 +27,7 @@
 	let searchLevel: any = [];
 	let resultList: any = [];
 
-	function skillMethod(event) {
+	function skillMethod(event:any) {
 		resultList = [];
 
 		let skills = [];
@@ -39,7 +36,7 @@
 		searchSkill = event.detail.value.inputValue;
 		searchLevel = event.detail.value.selectedLevel;
 
-		viewUsers.forEach((userInfo) => {
+		viewUsers.forEach((userInfo:any) => {
 			skills = userInfo.skills;
 			ranks = userInfo.ranks;
 			let userIcon = 'default.png';
@@ -50,7 +47,7 @@
 
 			if(searchLevel == ''){
 
-				let index = skills.findIndex((elem) => elem === searchSkill);
+				let index = skills.findIndex((elem:any) => elem === searchSkill);
 
 				if (index >= 0) {
 					resultList.push({
@@ -62,7 +59,7 @@
 					});
 				}
 			} else {
-				let skillIndex = skills.findIndex((elem) => elem === searchSkill);
+				let skillIndex = skills.findIndex((elem:any) => elem === searchSkill);
 
 				if (searchLevel.includes(ranks[skillIndex])){
 					resultList.push({
@@ -80,16 +77,12 @@
 
 	}
 	
-	const setUser = (user: any) => {
-			$selectedUser = user;
-			goto('./user');
-		};
 </script>
 
 <div class="center">
 	<Search on:skillMethod={skillMethod} />
 	{#each resultList as result}
-		<div on:click={() => setUser(result.email)}>
+		<div>
 			<Results {...result} />
 		</div>
 	{/each}

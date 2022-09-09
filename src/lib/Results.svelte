@@ -2,10 +2,19 @@
 	export let userIcon: string;
 	export let name: String;
 	export let level: String;
+	export let email: string;
+
+	import selectedUser from '../stores/selectedUserEmail';
+	import { goto } from '$app/navigation';
+
+	const setUser = (user:string) => {
+		$selectedUser = user;
+		goto('./user');
+	};
 </script>
 
 <div class="container">
-	<div class="card">
+	<div class="card"  on:click={() => setUser(email)}>
 		<div class="flex">
 			<div>
 				<img class="image-icon" alt="" src={userIcon} />
@@ -47,6 +56,7 @@
 		position: absolute;
 		bottom: 0;
 		font-size: 20pt;
+		margin-bottom: 0px;
 	}
 	.name-area {
 		font-size: 30pt;

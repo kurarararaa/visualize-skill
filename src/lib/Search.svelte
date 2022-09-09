@@ -23,26 +23,26 @@
 	};
 
 	/* HANDLING THE INPUT */
-	let searchInput = ''; // use with bind:this to focus element
+	let searchInput:any = ''; // use with bind:this to focus element
 	let inputValue = '';
 
 	$: if (!inputValue) {
 		filteredSkills = [];
-		hiLiteIndex = null;
+		hiLiteIndex = 0;
 	}
 
 	const setInputVal = (skillName:any) => {
 		inputValue = removeBold(skillName);
 		filteredSkills = [];
-		hiLiteIndex = null;
-		document.querySelector('#skill-input').focus();
+		hiLiteIndex = 0;
+		// document.getElementById('skill-input').focus();
 	};
 
 	const submitValue = () => {
 		if (inputValue) {
 			console.log(`${inputValue} is submitted!`);
 		} else {
-			alert("You didn't type anything.");
+			alert("スキル名を入力してください。");
 		}
 	};
 
@@ -65,7 +65,7 @@
 	//$: console.log(hiLiteIndex);
 	$: hiLitedskill = filteredSkills[hiLiteIndex];
 
-	const navigateList = (e) => {
+	const navigateList = (e:any) => {
 		if (e.key === 'ArrowDown' && hiLiteIndex <= filteredSkills.length - 1) {
 			hiLiteIndex === null ? (hiLiteIndex = 0) : (hiLiteIndex += 1);
 		} else if (e.key === 'ArrowUp' && hiLiteIndex !== null) {
