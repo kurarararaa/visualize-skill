@@ -4,10 +4,19 @@
 </script>
 
 <script lang="ts">
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import Search from '$lib/Search.svelte';
 	import Results from '$lib/Results.svelte';
 	import skills from '../stores/skillsStore';
 	import users from '../stores/usersStore';
+	import authStore from '../stores/authStore';
+
+	onMount(async () => {
+		if (!$authStore.isLoggedIn) {
+			goto("/")
+		}
+	});
 
 	let viewSkills;
 	let viewUsers: any = [];

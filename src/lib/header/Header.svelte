@@ -19,6 +19,7 @@
 </TopAppBar>
 
 <script>
+  import { goto } from '$app/navigation';
   import TopAppBar, {
     Row,
     Section,
@@ -53,6 +54,7 @@
 
 	async function logout() {
 		await signOut(auth);
+    await goto("/")
 	}
 </script>
 
