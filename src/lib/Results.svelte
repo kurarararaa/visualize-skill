@@ -14,7 +14,7 @@
 </script>
 
 <div class="container">
-	<div class="card"  on:click={() => setUser(email)}>
+	<div class="card cursor" on:click={() => setUser(email)}>
 		<div class="flex">
 			<div>
 				<img class="image-icon" alt="" src={userIcon} />
@@ -45,6 +45,9 @@
 		width: 400pt;
 		height: 150pt;
 		padding: 20px;
+	}
+	.cursor {
+		cursor: pointer;
 	}
 	.flex {
 		display: flex;

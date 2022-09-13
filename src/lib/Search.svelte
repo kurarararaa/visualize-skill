@@ -71,7 +71,9 @@
 		} else if (e.key === 'ArrowUp' && hiLiteIndex !== null) {
 			hiLiteIndex === 0 ? (hiLiteIndex = filteredSkills.length - 1) : (hiLiteIndex -= 1);
 		} else if (e.key === 'Enter') {
-			setInputVal(filteredSkills[hiLiteIndex]);
+			if(filteredSkills[hiLiteIndex] != undefined) {
+				setInputVal(filteredSkills[hiLiteIndex]);
+			}
 		} else {
 			return;
 		}
