@@ -15,59 +15,31 @@
 	};
 </script>
 
-<Card class="card cursor" on:click={() => setUser(email)}>
-	<Content>
-		<LayoutGrid>
-			<Cell span={3} align="middle">
-				<img class="image-icon" alt="" src={userIcon} />
-			</Cell>
-		</LayoutGrid>
-		<LayoutGrid>
-			<Cell span={3} align="middle">
-				{level}
-			</Cell>
-		</LayoutGrid>
-		<LayoutGrid>
-			<Cell span={3} align="middle">
-				{name}
-			</Cell>
-		</LayoutGrid>
-	</Content>
-</Card>
-
-<br />
+<div class="card">
+	<Card class="card cursor" style="width:300px" on:click={() => setUser(email)}>
+		<Content>
+			<LayoutGrid>
+				<Cell span={10} align="middle">
+					<img class="image-icon" alt="" src={userIcon} />
+				</Cell>
+			</LayoutGrid>
+			<LayoutGrid>
+				<Cell span={10} align="middle">
+					{level}
+				</Cell>
+			</LayoutGrid>
+			<LayoutGrid>
+				<Cell span={10} align="middle">
+					{name}
+				</Cell>
+			</LayoutGrid>
+		</Content>
+	</Card>
+</div>
 
 <style>
-	.container {
-		display: flex;
-		justify-content: center;
-	}
 	.card {
-		background-color: white;
-		width: 400pt;
-		height: 150pt;
-		padding: 20px;
-	}
-	.cursor {
-		cursor: pointer;
-	}
-	.flex {
-		display: flex;
-	}
-	.skill-area {
-		position: relative;
-	}
-	.skill {
-		position: absolute;
-		bottom: 0;
-		font-size: 20pt;
-		margin-bottom: 0px;
-	}
-	.name-area {
-		font-size: 30pt;
-	}
-	.name {
-		padding-left: 15px;
+		width: calc((100% - 30px * 1) / 3);
 	}
 	.image-icon {
 		height: 130px;

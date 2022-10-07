@@ -90,15 +90,21 @@
 
 <div class="center">
 	<Search on:skillMethod={skillMethod} />
+</div>
+<div class="cardGroup">
 	{#each resultList as result}
-		<div>
-			<Results {...result} />
-		</div>
+		<Results {...result} />
 	{/each}
 </div>
 
 <style>
 	.center {
 		text-align: center;
+	}
+	.cardGroup {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
 	}
 </style>
