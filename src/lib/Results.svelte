@@ -6,6 +6,8 @@
 
 	import selectedUser from '../stores/selectedUserEmail';
 	import { goto } from '$app/navigation';
+	import Card, { Content } from '@smui/card';
+	import LayoutGrid, { Cell } from '@smui/layout-grid';
 
 	const setUser = (user:string) => {
 		$selectedUser = user;
@@ -13,25 +15,25 @@
 	};
 </script>
 
-<div class="container">
-	<div class="card cursor" on:click={() => setUser(email)}>
-		<div class="flex">
-			<div>
+<Card class="card cursor" on:click={() => setUser(email)}>
+	<Content>
+		<LayoutGrid>
+			<Cell span={3} align="middle">
 				<img class="image-icon" alt="" src={userIcon} />
-			</div>
-			<div class="skill-area">
-				<p class="skill">
-					{level}
-				</p>
-			</div>
-		</div>
-		<div class="name-area">
-			<span class="name">
+			</Cell>
+		</LayoutGrid>
+		<LayoutGrid>
+			<Cell span={3} align="middle">
+				{level}
+			</Cell>
+		</LayoutGrid>
+		<LayoutGrid>
+			<Cell span={3} align="middle">
 				{name}
-			</span>
-		</div>
-	</div>
-</div>
+			</Cell>
+		</LayoutGrid>
+	</Content>
+</Card>
 
 <br />
 
